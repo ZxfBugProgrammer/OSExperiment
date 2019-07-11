@@ -7,7 +7,7 @@
 #include <unistd.h>
 
 pthread_mutex_t f_mutex;  //互斥信号量
-int count = 2;            //计数变量
+int count = 0;            //计数变量
 
 void *pthread_function_countWord(void *arg)  //第一个子线程
 {
@@ -30,6 +30,11 @@ void *pthread_function_countWord(void *arg)  //第一个子线程
             pthread_mutex_unlock(&f_mutex);
         }
         prech = ch;
+    }
+    if (isalnum(prech)) {
+        pthread_mutex_lock(&f_mutex);
+        count++;
+        pthread_mutex_unlock(&f_mutex);
     }
     fclose(fp);
 }
